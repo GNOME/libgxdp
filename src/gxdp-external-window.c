@@ -18,6 +18,8 @@
  *       Jonas Ådahl <jadahl@redhat.com>
  */
 
+#include "gxdp-config.h"
+
 #include "gxdp-external-window.h"
 
 #include <string.h>
