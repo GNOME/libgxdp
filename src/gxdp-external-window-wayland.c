@@ -62,7 +62,7 @@ G_DEFINE_TYPE (GxdpExternalWindowWayland, gxdp_external_window_wayland,
                GXDP_TYPE_EXTERNAL_WINDOW)
 
 GxdpExternalWindowWayland *
-external_window_wayland_new (const char *handle_str)
+gxdp_external_window_wayland_new (const char *handle_str)
 {
   g_autoptr(GxdpExternalWindowWayland) external_window_wayland = NULL;
 
