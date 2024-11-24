@@ -6,4 +6,6 @@ project(
   license: 'LGPLv2.1+'
 )
 
+gtk_dep = dependency('gtk4')
+
 subdir('src')

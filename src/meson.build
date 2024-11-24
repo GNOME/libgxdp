@@ -12,8 +12,6 @@ sources = files(
 
 built_sources = []
 
-gtk_dep = dependency('gtk4')
-
 dependencies = [
   gtk_dep,
 ]
