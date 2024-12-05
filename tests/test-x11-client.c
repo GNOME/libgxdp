@@ -1,5 +1,5 @@
 /*
- * Copyright © 2016 Red Hat, Inc
+ * Copyright © 2024 Red Hat, Inc
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -14,28 +14,34 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with this library. If not, see <http://www.gnu.org/licenses/>.
  *
- * Authors:
- *       Jonas Ådahl <jadahl@redhat.com>
  */
 
-#pragma once
-
-#include <glib-object.h>
+#include <gdk/gdk.h>
+#include <gdk/x11/gdkx.h>
 #include <gtk/gtk.h>
 
-#define GXDP_TYPE_EXTERNAL_WINDOW (gxdp_external_window_get_type ())
-G_DECLARE_DERIVABLE_TYPE (GxdpExternalWindow, gxdp_external_window,
-                          GXDP, EXTERNAL_WINDOW, GObject)
-
-struct _GxdpExternalWindowClass
+int
+main (int    argc,
+      char **argv)
 {
-  GObjectClass parent_class;
+  g_autoptr (GtkWindow) window = NULL;
+  GdkSurface *surface;
+  XID xid;
 
-  void (*set_parent_of) (GxdpExternalWindow *external_window,
-                         GdkSurface         *surface);
-};
+  gdk_set_allowed_backends ("x11");
+  gtk_disable_portals ();
+  gtk_init ();
 
-GxdpExternalWindow *gxdp_external_window_new_from_handle (const char *handle_str);
+  window = GTK_WINDOW (gtk_window_new ());
+  gtk_window_set_default_size (window, 100, 100);
+  gtk_window_present (window);
 
-void gxdp_external_window_set_parent_of (GxdpExternalWindow *external_window,
-					 GdkSurface         *surface);
+  surface = gtk_native_get_surface (GTK_NATIVE (window));
+  xid = gdk_x11_surface_get_xid (surface);
+
+  g_print ("%lu\n", xid);
+
+  g_main_context_iteration (NULL, TRUE);
+
+  return EXIT_SUCCESS;
+}

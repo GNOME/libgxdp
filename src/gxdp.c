@@ -44,8 +44,7 @@ gxdp_init_gtk (GxdpServiceClientType   service_client_type,
       return TRUE;
     }
 
-  /* Avoid pointless and confusing recursion */
-  g_unsetenv ("GTK_USE_PORTAL");
+  gtk_disable_portals ();
 
   if (G_UNLIKELY (!g_setenv ("ADW_DISABLE_PORTAL", "1", TRUE)))
     {
