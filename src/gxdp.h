@@ -27,6 +27,7 @@ typedef enum _GxdpServiceClientType
   GXDP_SERVICE_CLIENT_TYPE_NONE,
   GXDP_SERVICE_CLIENT_TYPE_PORTAL_BACKEND,
   GXDP_SERVICE_CLIENT_TYPE_FILE_CHOOSER,
+  GXDP_SERVICE_CLIENT_TYPE_GLOBAL_SHORTCUTS,
 } GxdpServiceClientType;
 
 gboolean gxdp_init_gtk (GxdpServiceClientType   service_client_type,
