@@ -69,10 +69,10 @@ gxdp_external_window_new_from_handle (const char *handle_str)
 
 void
 gxdp_external_window_set_parent_of (GxdpExternalWindow *external_window,
-				    GdkSurface     *surface)
+                                    GdkSurface     *surface)
 {
   GXDP_EXTERNAL_WINDOW_GET_CLASS (external_window)->set_parent_of (external_window,
-								   surface);
+                                                                   surface);
 }
 
 static void

@@ -124,7 +124,7 @@ on_mapped (GdkSurface         *surface,
 
 static void
 gxdp_external_window_wayland_set_parent_of (GxdpExternalWindow *external_window,
-					    GdkSurface         *surface)
+                                            GdkSurface         *surface)
 {
   GxdpExternalWindowWayland *external_window_wayland =
     GXDP_EXTERNAL_WINDOW_WAYLAND (external_window);
