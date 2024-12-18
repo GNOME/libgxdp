@@ -40,7 +40,7 @@ gxdp_init_gtk (GxdpServiceClientType   service_client_type,
   if (gtk_is_initialized ())
     {
       g_warning ("GTK was initialized too early, "
-                 "portal dialogs may missbehave.");
+                 "portal dialogs may misbehave.");
       return TRUE;
     }
 
