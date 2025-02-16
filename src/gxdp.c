@@ -79,6 +79,8 @@ gxdp_init_gtk (GxdpServiceClientType   service_client_type,
                        "Failed to initialize GTK");
           return FALSE;
         }
+
+      return TRUE;
     }
 #endif
 
