@@ -70,12 +70,12 @@ if gtk_wayland_dep.found()
   cdata.set('GXDP_HAVE_GTK_WAYLAND', true)
 endif
 
-gtk_x11_dep = dependency('gtk4-x11', required: false)
+gtk_x11_dep = meson.get_compiler('c').find_library('gtk4', has_headers: ['gdk/x11/gdkx.h'], required: false)
 if gtk_x11_dep.found()
   sources += files('gxdp-external-window-x11.c')
   dependencies += [
     dependency('x11'),
-    gtk_x11_dep,
+    dependency('gtk4-x11'),
   ]
   cdata.set('GXDP_HAVE_GTK_X11', true)
 endif
