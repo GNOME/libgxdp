@@ -74,7 +74,7 @@ init_x11_interop (void)
   if (!x11_interop)
     {
       g_warning ("Missing X11 interop protocol support, "
-                 "portal dialogs may missbehave");
+                 "portal dialogs may misbehave");
     }
 }
 
@@ -244,7 +244,7 @@ gxdp_wayland_init (GxdpServiceClientType   service_client_type,
   if (!proxy)
     {
       g_warning ("Compositor service channel missing, "
-                 "portals dialogs may missbehave (%s)",
+                 "portal dialogs may misbehave (%s)",
                  local_error->message);
       return init_gtk_wayland_fallback (error);
     }
@@ -258,7 +258,7 @@ gxdp_wayland_init (GxdpServiceClientType   service_client_type,
         NULL, &local_error))
     {
       g_warning ("Failed to open service channel Wayland connection, "
-                 "portals dialogs may missbehave (%s).",
+                 "portal dialogs may misbehave (%s).",
                  local_error->message);
 
       return init_gtk_wayland_fallback (error);
@@ -270,7 +270,7 @@ gxdp_wayland_init (GxdpServiceClientType   service_client_type,
   if (fd < 0)
     {
       g_warning ("Failed to acquire Wayland connection file descriptor, "
-                 "portals dialogs may missbehave (%s).",
+                 "portal dialogs may misbehave (%s).",
                  local_error->message);
 
       return init_gtk_wayland_fallback (error);
