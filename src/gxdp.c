@@ -32,6 +32,7 @@
 
 gboolean
 gxdp_init_gtk (GxdpServiceClientType   service_client_type,
+               GxdpFlags               flags,
                GError                **error)
 {
   const char *forced_gdk_backend;
@@ -44,13 +45,16 @@ gxdp_init_gtk (GxdpServiceClientType   service_client_type,
       return TRUE;
     }
 
-  gtk_disable_portals ();
-
-  if (G_UNLIKELY (!g_setenv ("ADW_DISABLE_PORTAL", "1", TRUE)))
+  if ((flags & GXDP_FLAG_USE_PORTALS) != 0)
     {
-      g_set_error (error, G_IO_ERROR, g_io_error_from_errno (errno),
-                   "Failed to set ADW_DISABLE_PORTAL: %s", g_strerror (errno));
-      return FALSE;
+      gtk_disable_portals ();
+
+      if (G_UNLIKELY (!g_setenv ("ADW_DISABLE_PORTAL", "1", TRUE)))
+        {
+          g_set_error (error, G_IO_ERROR, g_io_error_from_errno (errno),
+                      "Failed to set ADW_DISABLE_PORTAL: %s", g_strerror (errno));
+          return FALSE;
+        }
     }
 
   forced_gdk_backend = g_getenv ("GDK_BACKEND");

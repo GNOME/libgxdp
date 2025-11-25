@@ -30,5 +30,12 @@ typedef enum _GxdpServiceClientType
   GXDP_SERVICE_CLIENT_TYPE_GLOBAL_SHORTCUTS,
 } GxdpServiceClientType;
 
+typedef enum _GxdpFlags
+{
+  GXDP_FLAG_NONE = 0,
+  GXDP_FLAG_USE_PORTALS = 1 << 0,
+} GxdpFlags;
+
 gboolean gxdp_init_gtk (GxdpServiceClientType   service_client_type,
+                        GxdpFlags               flags,
                         GError                **error);
