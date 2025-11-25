@@ -30,8 +30,21 @@
 #include "gxdp-wayland.h"
 #endif
 
+/**
+ * gxdp_init_gtk: (method)
+ * @service_client_type: Wayland service client type to be used
+ * @implemented_interfaces: (array zero-terminated=1) (nullable):
+ *     a %NULL-terminated array of portal interface names implemented by the
+ *     application.
+ *
+ * Initializes the portal implementation. Usage of other portals is blocked via
+ * GTK according to @implemented_interfaces. If %NULL is passed, then all portals are blocked, otherwise only the given list of interfaces.
+ *
+ * Must be called before GTK initialization.
+ */
 gboolean
 gxdp_init_gtk (GxdpServiceClientType   service_client_type,
+               const char            **implemented_interfaces,
                GError                **error)
 {
   const char *forced_gdk_backend;
@@ -44,8 +57,21 @@ gxdp_init_gtk (GxdpServiceClientType   service_client_type,
       return TRUE;
     }
 
-  gtk_disable_portals ();
+  if (implemented_interfaces == NULL)
+    {
+      /* No portal interfaces specified, disabling all portals */
+      gtk_disable_portals ();
+    }
+    else
+    {
+#if GTK_CHECK_VERSION (4,21,4)
+      gtk_disable_portal_interfaces (implemented_interfaces);
+#else
+      gtk_disable_portals ();
+#endif
+    }
 
+  /* Make libadwaita use GSettings */
   if (G_UNLIKELY (!g_setenv ("ADW_DISABLE_PORTAL", "1", TRUE)))
     {
       g_set_error (error, G_IO_ERROR, g_io_error_from_errno (errno),
