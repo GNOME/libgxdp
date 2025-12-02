@@ -105,6 +105,17 @@ get_high_contrast (GValue   *value,
   return TRUE;
 }
 
+static gboolean
+get_xft_dpi (GValue   *value,
+             GVariant *variant,
+             gpointer  user_data)
+{
+  g_value_set_int (value,
+                   g_variant_get_double (variant) * 96 * 1024);
+
+  return TRUE;
+}
+
 #define MAX_KEYS 20
 
 static void
@@ -130,7 +141,7 @@ init_settings (void)
         { "enable-animations", "gtk-enable-animations" },
         { "gtk-enable-primary-paste", "gtk-enable-primary-paste" },
         { "overlay-scrolling", "gtk-overlay-scrolling" },
-        { "text-scaling-factor", "gtk-xft-dpi" },
+        { "text-scaling-factor", "gtk-xft-dpi", get_xft_dpi },
       },
     },
     {
