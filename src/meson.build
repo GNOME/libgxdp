@@ -1,4 +1,5 @@
 gnome = import('gnome')
+pkgconfig = import('pkgconfig')
 
 top_srcdir = meson.project_source_root()
 dbus_interfaces = files(
@@ -17,6 +18,8 @@ dependencies = [
 ]
 
 cdata = configuration_data()
+
+shared_library_include_dir = get_option('shared-library') ? 'include' : ''
 
 gtk_wayland_dep = dependency('gtk4-wayland', required: false)
 if gtk_wayland_dep.found()
@@ -53,6 +56,8 @@ if gtk_wayland_dep.found()
       sources: dbus_interfaces,
       namespace: 'GxdpDBus',
       interface_prefix: 'org.gnome.',
+      install_dir: shared_library_include_dir,
+      install_header: true,
     )
 
     built_sources += [client_header, protocol_code]
@@ -94,3 +99,28 @@ libgxdp_dep = declare_dependency(
   dependencies: dependencies,
 )
 meson.override_dependency('libgxdp', libgxdp_dep)
+
+if get_option('shared-library')
+    gxdp_lib = shared_library(
+    'gxdp',
+    sources: sources + built_sources,
+    include_directories: include_directories('.'),
+    dependencies: dependencies,
+    version: '0',
+    install: true
+  )
+  install_headers(
+    'gxdp.h',
+    'gxdp-external-window.h',
+  )
+  pkgconfig.generate(
+    description: 'A library for GNOME XDG Desktop Portal',
+    filebase: 'libgxdp',
+    libraries: [ gxdp_lib, ] + dependencies,
+    name: 'libgxdp',
+    requires: [
+      'gtk4',
+    ],
+    version: '0'
+  )
+endif

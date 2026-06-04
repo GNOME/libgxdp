@@ -3,3 +3,11 @@ option('tests',
   value: true,
   description: 'Enable tests'
 )
+
+# Default usage is to include this as a meson subproject, but it can be
+# built as a library e.g. for usage in a Flatpak manifest
+option('shared-library',
+  type: 'boolean',
+  value: false,
+  description: 'Add an installable library target'
+)

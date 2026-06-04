@@ -15,3 +15,4 @@ if get_option('tests')
 endif
 
 summary('Tests', get_option('tests'))
+summary('Library', get_option('shared-library'))
