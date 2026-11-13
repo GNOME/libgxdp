@@ -70,12 +70,6 @@ init_x11_interop (void)
   wl_registry = wl_display_get_registry (wl_display);
   wl_registry_add_listener (wl_registry, &registry_listener, &x11_interop);
   wl_display_roundtrip (wl_display);
-
-  if (!x11_interop)
-    {
-      g_warning ("Missing X11 interop protocol support, "
-                 "portal dialogs may misbehave");
-    }
 }
 
 static gboolean
@@ -303,6 +297,13 @@ gxdp_wayland_set_x11_parent (GdkSurface *dialog_surface,
   struct wl_surface *wl_surface;
 
   g_return_if_fail (dialog_surface);
+
+  if (!x11_interop)
+    {
+      g_warning_once ("Missing X11 interop protocol support, "
+                      "portal dialogs may misbehave");
+      return;
+    }
 
   wl_surface = gdk_wayland_surface_get_wl_surface (dialog_surface);
   mutter_x11_interop_set_x11_parent (x11_interop, wl_surface, parent_xid);
